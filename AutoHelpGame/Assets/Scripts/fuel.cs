@@ -10,7 +10,8 @@ public class fuel : Car
         if (collision.CompareTag("Player"))
         {
             FuelBar = GameObject.FindWithTag("FuelBar").GetComponent<Slider>();
-            FuelBar.value += FuelConsume;
+           
+            FuelBar.value += 0.01f;
             Destroy(gameObject);
 
         }
