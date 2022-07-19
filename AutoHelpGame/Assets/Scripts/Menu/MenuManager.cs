@@ -39,4 +39,8 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("MapSelection");
     }
+    public void LoadCarSelection()
+    {
+        SceneManager.LoadScene("CarSelection");
+    }
 }
