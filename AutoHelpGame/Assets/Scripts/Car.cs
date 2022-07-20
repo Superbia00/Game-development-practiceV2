@@ -19,6 +19,9 @@ public abstract class Car : MonoBehaviour
     private float brakesPower= 150;
 
     [SerializeField]
+    private float maxFuelTank=100;
+
+    [SerializeField]
     private float fuelTank=100;
 
     [SerializeField]
@@ -63,6 +66,7 @@ public abstract class Car : MonoBehaviour
     public float FuelTank { get => fuelTank; set => fuelTank = value; }
     public float FuelConsume { get => fuelConsume; set => fuelConsume = value; }
     public Slider FuelBar { get => fuelBar; set => fuelBar = value; }
-#endregion
-    
+    public float MaxFuelTank { get => maxFuelTank; set => maxFuelTank = value; }
+    #endregion
+
 }

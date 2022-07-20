@@ -5,6 +5,8 @@ using UnityEngine;
 public class CarButtons : MonoBehaviour
 {
     GameObject player;
+    float clicksCounter=0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,5 +26,17 @@ public class CarButtons : MonoBehaviour
      public void ExternalBrakesTurnOn()
     {
         player.GetComponent<carEngine>().BrakesTurnOn();
+    }
+    public void ExternalEngineNoAbuse()
+    {
+       clicksCounter++;
+       if(clicksCounter>=10)
+       {
+            /*   player.GetComponent<carEngine>().ConsumeFaster();
+                clicksCounter=0; */
+          player.GetComponent<carEngine>().ConsumeFuel();
+          clicksCounter=0;
+       }
+       
     }
 }

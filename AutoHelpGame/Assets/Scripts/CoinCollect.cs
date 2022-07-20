@@ -11,8 +11,8 @@ public class CoinCollect : MonoBehaviour
     {
         if(col.gameObject.tag == "Player")
         {
-            Debug.Log(col.gameObject.name + " : " + gameObject.name + " : " + Time.time);
-            Debug.Log("add coin");
+            /* Debug.Log(col.gameObject.name + " : " + gameObject.name + " : " + Time.time);
+            Debug.Log("add coin"); */
             PlayerPrefs.SetInt("levelCoins",PlayerPrefs.GetInt("levelCoins")+1);
             GameObject.FindGameObjectWithTag("CoinCounter").GetComponent<CoinCounter>().GetValueCoins();
            if(myClip)

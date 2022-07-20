@@ -21,7 +21,7 @@ public class CoinCounter : MonoBehaviour
 
     public void GetValueCoins()
     {
-        Debug.Log("COPY");
+        //Debug.Log("COPY");
         this.GetComponent<TextMeshProUGUI>().text=PlayerPrefs.GetInt("levelCoins").ToString();
     }
 }

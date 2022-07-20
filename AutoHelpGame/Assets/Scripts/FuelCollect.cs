@@ -20,9 +20,13 @@ public class FuelCollect : MonoBehaviour
     {
         if(col.gameObject.tag == "Player")
         {
-            Debug.Log(col.gameObject.name + " : " + gameObject.name + " : " + Time.time);
-            Debug.Log("add fuel");
-            col.GetComponent<carEngine>().FuelTank+= capacity;
+           /*  Debug.Log(col.gameObject.name + " : " + gameObject.name + " : " + Time.time);
+            Debug.Log("add fuel"); */
+            if(col.GetComponent<carEngine>().FuelTank < col.GetComponent<carEngine>().MaxFuelTank) // add max here
+            {
+                col.GetComponent<carEngine>().FuelTank+= capacity;
+            }
+         
             if(myClip)
             {
                 GameObject.FindGameObjectWithTag("ExtraAudio").GetComponent<AudioSource>().PlayOneShot(myClip);
