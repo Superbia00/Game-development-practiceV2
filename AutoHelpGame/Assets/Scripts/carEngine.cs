@@ -19,14 +19,6 @@ public class carEngine : Car
     [SerializeField]
     Rigidbody2D frontWheelBody;
 
-    [SerializeField]
-    Transform groundPointer;
-
-    [SerializeField]
-    LayerMask ground;
-    
-    [SerializeField]
-    bool m_Grounded;
    
     //boost
     void Awake()
@@ -37,6 +29,8 @@ public class carEngine : Car
         consumeTime = Intervals[3];
         CarBody = this.GetComponent<Rigidbody2D>();
         FuelBar =  GameObject.FindWithTag("FuelBar").GetComponent<Slider>();
+        /*if(PlayerDataHub.instance == null)
+            CarData = PlayerDataHub.instance.PlayerData.TotalCar;*/
     }
     // Start is called before the first frame update
     void Start()
@@ -48,55 +42,48 @@ public class carEngine : Car
     // Update is called once per frame
     void Update()
     {
-        
-        Debug.DrawRay(groundPointer.position, new Vector2(0,-2f), Color.green);
-        m_Grounded= IsGrounded();
-
+       // Debug.Log(CarBody.velocity);
         AccelAndDeaccel();
 
-        if(m_Grounded)
+        if (frictionTime > 0 && !engineOn)
         {
-            if (frictionTime > 0 && !engineOn)
+            frictionTime -= Time.deltaTime;
+        }
+        else if (frictionTime < 0 && !engineOn)
+        {
+            frictionTime += Intervals[1];
+            if (CarBody.velocity.x >= 3)
             {
-                frictionTime -= Time.deltaTime;
-            }
-            else if (frictionTime < 0 && !engineOn)
-            {
-                frictionTime += Intervals[1];
-                if (CarBody.velocity.x >= 3)
-                {
-                    CarBody.velocity = new Vector2(CarBody.velocity.x - 3f, CarBody.velocity.y-3f);
-                }
-                else if (CarBody.velocity.x < 0.5f)
-                {
-                    CarBody.velocity = new Vector2(0, 0); //stop all movement
-                    Speed = InitalSpeed;
-                }
-            }
-
-            if( brakesOn && CarBody.velocity.x>3f)
-            {
-                //Debug.Log("brake");
                 CarBody.velocity = new Vector2(CarBody.velocity.x - 3f, CarBody.velocity.y-3f);
-                
             }
-            else if (brakesOn && CarBody.velocity.x<0.1f && CarBody.velocity.y<0.7f)
+            else if (CarBody.velocity.x < 0.5f)
             {
-                backWheelBody.drag=15f;
-                frontWheelBody.drag=15f;
-            }
-            else if (CarBody.velocity.y<0.3f )
-            {
-                backWheelBody.drag=2f;
-                frontWheelBody.drag=2f;
+                CarBody.velocity = new Vector2(0, 0); //stop all movement
+                Speed = InitalSpeed;
             }
         }
-        else
+
+        if( brakesOn && CarBody.velocity.x>3f)
+        {
+            Debug.Log("brake");
+            CarBody.velocity = new Vector2(CarBody.velocity.x - 3f, CarBody.velocity.y-3f);
+          
+        }
+        else if (brakesOn && CarBody.velocity.x<0.1f && CarBody.velocity.y<0.7f)
+        {
+            backWheelBody.drag=15f;
+            frontWheelBody.drag=15f;
+        }
+        else if (CarBody.velocity.y<0.7f )
+        {
+           backWheelBody.drag=2f;
+           frontWheelBody.drag=2f;
+        }
+        else if (CarBody.velocity.y>1f)
         {
             backWheelBody.drag=0f;
             frontWheelBody.drag=0f;
         }
-        
 
     }
 
@@ -155,9 +142,10 @@ public class carEngine : Car
             }
             else
             {
-                ConsumeFuel();
-
-                consumeTime += Intervals[3];
+                FuelTank-= FuelConsume*100;
+              
+               
+                consumeTime+=Intervals[3];
             }
         }
         else
@@ -170,15 +158,9 @@ public class carEngine : Car
             GameObject.FindWithTag("DeathMenu").transform.GetChild (0).gameObject.SetActive(true);
             Time.timeScale = 0f;
         }
-         FuelBar.value = FuelTank/MaxFuelTank;
+         FuelBar.value = FuelTank/FuelMaxTank;
     }
-
-    public void ConsumeFuel()
-    {
-        FuelTank -= FuelConsume * 100;
-    }
-
-    public void EngineTurnOn(bool forward)
+   public void EngineTurnOn(bool forward)
    {    
         engineOn=!engineOn;
         if(forward)
@@ -195,19 +177,8 @@ public class carEngine : Car
         }
 
    }
-   public void BrakesTurnOn()
+    public void BrakesTurnOn()
    {    
         brakesOn=!brakesOn;
    }
-   public bool IsGrounded() 
-    {
-     return Physics2D.Raycast(groundPointer.position, new Vector2(0,-2f), 1f, ground);
-    }
-
-    public void ConsumeFaster()
-    {
-        Intervals[3]-=0.2f;
-        Debug.Log(consumeTime);
-    }
 }
-
