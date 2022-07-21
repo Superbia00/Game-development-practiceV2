@@ -28,6 +28,7 @@ public class PlayerData : ScriptableObject
     public void SelectCar(int index)
     {
         _totalCar= _cars[index];
+        Debug.Log(_totalCar);
     }
 
     public IEnumerable<CarData> GetCars()

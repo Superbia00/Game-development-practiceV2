@@ -440,6 +440,7 @@ MonoBehaviour:
   accel: 50
   brakesPower: 50
   fuelTank: 100
+  carData: {fileID: 11400000, guid: 52f114fcbad9f694b96daafb12a08311, type: 2}
   fuelConsume: 0.01
   fuelBar: {fileID: 0}
   engineOn: 0
@@ -451,8 +452,8 @@ MonoBehaviour:
   - 2
   - 2
   - 1
-  backWheelBody: {fileID: 0}
-  frontWheelBody: {fileID: 0}
+  backWheelBody: {fileID: 6255743017802122215}
+  frontWheelBody: {fileID: 6255743016860634248}
 --- !u!50 &6255743017783811456
 Rigidbody2D:
   serializedVersion: 4
@@ -500,7 +501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933c0d83e16366643899fc2e015bdfcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 100
+  _maxHP: 0
 --- !u!114 &6255743017783811461
 MonoBehaviour:
   m_ObjectHideFlags: 0

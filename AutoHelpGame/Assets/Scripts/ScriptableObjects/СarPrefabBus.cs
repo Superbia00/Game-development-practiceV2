@@ -15,7 +15,7 @@ public class СarPrefabBus: ScriptableObject
     [SerializeField]
     private List<CarPrefabPair> _carPrefabPairs = new List<CarPrefabPair>();
 
-    public GameObject FingPrefab(CarData data)
+    public GameObject FindPrefab(CarData data)
     {
         return _carPrefabPairs.Where(x => x.CarData == data || x.CarData.Id == data.Id).First().CarPrefab;
     }
